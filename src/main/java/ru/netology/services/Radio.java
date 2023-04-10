@@ -15,7 +15,7 @@ public class Radio {
 
     // Метод установки значения текущей радио станции
     public void setCurrentRadioStation(int newCurrentRadioStation) {
-        if ((currentRadioStation >= 0) & (currentRadioStation <= 9)) {
+        if ((newCurrentRadioStation >= 0) & (newCurrentRadioStation <= 9)) {
             currentRadioStation = newCurrentRadioStation; // Устанавливаем номер станции после проверки его допустимости
         }
     }
@@ -46,7 +46,9 @@ public class Radio {
 
     // Метод установки значения текущей громкости
     public void setCurrentVolume(int newCurrentVolume) {
-        currentVolume = newCurrentVolume;               // Устанавливаем громкость
+        if ((newCurrentVolume >= 0) & (newCurrentVolume <= 100)) {
+            currentVolume = newCurrentVolume;           // Устанавливаем новую громкость
+        }
     }
 
     // Метод увеличения громкости
