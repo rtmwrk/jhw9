@@ -4,7 +4,22 @@ package ru.netology.services;
 public class Radio {
 
     private int currentRadioStation;                    // Поле - номер текущей радиостанции
-    private int currentVolume;                          // Поле - громкость звука;
+    private int currentVolume;                          // Поле - громкость звука
+    private int maxCountRadioStation;                   // Поле - количество радиостанций
+
+    // --- Конструкторы радио ------------------------------------------------------------------------------------
+    // Конструктор без параметров
+    public Radio() {
+        this.maxCountRadioStation = 9;                     // Требование задания - по умолчанию кол-во станций 10
+                                                           // (от 0 до 9)
+    }
+
+    // Конструктор с параметром - максимальное количество радиостанций
+    public Radio(int maxRadioStation) {
+        this.maxCountRadioStation = maxRadioStation - 1;    // Запоминаем в поле объекта maxCountRadioStation
+                                                            // макисмальное кол-во станций, передаваемое параметром
+                                                            // maxRadioStation
+    }
 
     // --- Методы работы с текущим номером радиостанции ---------------------------------------------------------
 
@@ -15,15 +30,15 @@ public class Radio {
 
     // Метод установки значения текущей радио станции
     public void setCurrentRadioStation(int newCurrentRadioStation) {
-        if ((newCurrentRadioStation >= 0) & (newCurrentRadioStation <= 9)) {
-            currentRadioStation = newCurrentRadioStation; // Устанавливаем номер станции после проверки его допустимости
+        if ((newCurrentRadioStation >= 0) & (newCurrentRadioStation <= maxCountRadioStation)) {
+            currentRadioStation = newCurrentRadioStation;
         }
     }
 
     // Метод увеличения номера радио станции
     public void nextRadioStation() {
-        if (currentRadioStation == 9) {                 // Если текущий номер станции уже равен "9",
-            currentRadioStation = 0;                    // то устанавливаем текущим номером станции "0"
+        if (currentRadioStation == maxCountRadioStation) {
+            currentRadioStation = 0;
             return;
         }
         setCurrentRadioStation(currentRadioStation + 1);
@@ -31,8 +46,8 @@ public class Radio {
 
     // Метод уменьшения номера радио станции
     public void prevRadioStation() {
-        if (currentRadioStation == 0) {                 // Если текущий номер станции уже равен "0",
-            currentRadioStation = 9;                    // то устанавливаем текущим номером станции "9"
+        if (currentRadioStation == 0) {
+            currentRadioStation = maxCountRadioStation;
             return;
         }
         setCurrentRadioStation(currentRadioStation - 1);

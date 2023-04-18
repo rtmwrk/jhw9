@@ -4,6 +4,155 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class RadioTest {
+    // --- Дополнительные тесты методов сервисного класса выбора радиостанции ---------------------------------------
+    // Тесты предыдущего задания оставляем, они идут в следующем блоке, ниже
+    // В данном же блоке добавим тесты с учетом того фактора, что теперь количество радиостанций можно задать,
+    // путем изменения поля "maxCountRadioStation" объекта Radio()
+    //
+    // Поэтому в тестах повторим логику ранее подготовленных тестов для блока выбора радиостанции, но фиксированное
+    // значение максимального номера станции "9", заменим на значение поля "maxCountRadioStation"
+    @Test
+    public void shouldGetCurrentRadioStationWithVariableMax() {
+        Radio receiver = new Radio(30);                    // Устанавливаем количество радиостанций
+
+        receiver.setCurrentRadioStation(15);                            // Устанавливаем текущей станцию "15"
+
+        int expected = 15;                                              // Номер станции должен измениться
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тест для номера станции "-1"
+    @Test
+    public void shouldSetCurrentRadioStationIfMinusOneWithVariableMax() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(15);                            // Устанавливаем текущей станцию "15"
+        receiver.setCurrentRadioStation(-1);                            // Попробуем изменить значение номера текущей
+                                                                        // станции на невалидное
+        int expected = 15;                                              // Номер станции не должен измениться
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тест для номера станции "0"
+    @Test
+    public void shouldSetCurrentRadioStationIfZeroWithVariableMax() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(0);                             // Устанавливаем текущей станцию "0"
+
+        int expected = 0;                                               // Номер станции должен измениться
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тест для номера станции "1"
+    @Test
+    public void shouldSetCurrentRadioStationIfPlusOneWithVariableMax() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(1);                             // Устанавливаем текущей станцию "1"
+
+        int expected = 1;                                               // Номер станции должен измениться
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тест для номера станции "maxCountRadioStation - 1"
+    @Test
+    public void shouldSetCurrentRadioStationIfMaxCountStationMinusOne() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(28);                            // Устанавливаем номер станции кол-во станций-2
+
+        int expected = 28;                                              // Номер должен измениться
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тест для номера станции "maxCountRadioStation"
+    @Test
+    public void shouldSetCurrentRadioStationIfMaxCountStation() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(29);                            // Устанавливаем номер станции кол-во станций-1
+
+        int expected = 29;                                              // Номер должен измениться
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тест для номера станции "maxCountRadioStation+1"
+    @Test
+    public void shouldSetCurrentRadioStationIfMaxCountStationPlusOne() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(15);                            // Устанавливаем текущей станцию "15"
+        receiver.setCurrentRadioStation(30);                            // Устанавливаем номер станции не валидный
+                                                                        // - кол-во станций
+        int expected = 15;                                              // Номер станции измениться не должен
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тестируем метод nextRadioStation()
+    // Тест для номера станции "maxCountStation-1"
+    @Test
+    public void shouldNextRadioStationIfMaxCountStationMinusOne() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(28);                            // Устанавливаем текущей станцию -
+                                                                        // кол-во станций-1
+        receiver.nextRadioStation();                                    // Номер станции должен измениться на "следующий"
+
+        int expected = 29;
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тест для номера станции "maxCountStation"
+    @Test
+    public void shouldNextRadioStationIfMaxCountStation() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(29);                            // Устанавливаем текущей станцию -
+                                                                        // кол-во станций
+        receiver.nextRadioStation();
+
+        int expected = 0;                                               // Номер станции должен стать "0"
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тестируем метод prevRadioStation()
+    // Тест для номера станции "1"
+    @Test
+    public void shouldPrevRadioStationIfOneWithVariableMax() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(1);                             // Устанавливаем номер станции "1"
+        receiver.prevRadioStation();
+
+        int expected = 0;                                               // Номер станции должен стать "предыдущим"
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тест для номера станции "0"
+    @Test
+    public void shouldPrevRadioStationIfZeroWithVariableMax() {
+        Radio receiver = new Radio(30);
+
+        receiver.setCurrentRadioStation(0);                             // Устанавливаем номер станции "0"
+        receiver.prevRadioStation();
+
+        int expected = 29;                                              // Номер станции должен стать
+                                                                        // кол-во станций - 1
+        int actual = receiver.getCurrentRadioStation();
+        Assertions.assertEquals(expected, actual);
+    }
+
 
     // --- Тестируем методы сервисного класса, связанные с выбором радиостанции -------------------------------------
     //
